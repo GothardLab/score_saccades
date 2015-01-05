@@ -23,8 +23,13 @@ end
 
 events=Chan32.data.markers;
 ts=Chan32.data.timings;
+
+if sTime ~= 0 && eTime ~= 0 
+    
 events(find(ts<sTime | ts>eTime))=[];
 ts(find(ts<sTime | ts>eTime))=[];
+
+end
 
 for tsDEX = 1:size(ts,1) %fill byte structure
     byte(tsDEX).paired = 0;

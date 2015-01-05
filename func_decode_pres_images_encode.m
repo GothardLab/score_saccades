@@ -48,6 +48,9 @@ if ~isdir([eyePath,'matfiles\'])
     mkdir([eyePath,'matfiles\']);
 end
 
-save_path = [eyePath,'matfiles\',eyeFile(1:end-4),'_trialinfo_',num2str(sTimeITM),'-',num2str(eTimeITM),'_',itmFile(1:end-4),'.mat'];
-
+if sTime ~= 0 && eTime ~= 0 
+    save_path = [eyePath,'matfiles\',eyeFile(1:end-4),'_trialinfo_',num2str(sTimeITM),'-',num2str(eTimeITM),'_',itmFile(1:end-4),'.mat'];
+else
+    save_path = [eyePath,'matfiles\',eyeFile(1:end-4),'_trialinfo_all_time_',itmFile(1:end-4),'.mat'];
+end
 save(save_path,'sTimeITM','eTimeITM','trialinfo');

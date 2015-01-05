@@ -1,8 +1,5 @@
-%function [eyeX,eyeY,time] = downsamplepupil(fpath)
-%test stuff
-% clear all;close all;pack;clc;
+function [eyeX,eyeY] = geteyes(fpath)
 
-% [File,Path] = uigetfile;    %get a raw itm file
 fid=fopen(fpath);
 [ch8,ch8_info]=SONGetADCChannel(fid,8);%X direction eye info  
 [ch8]=single(SONADCToDouble(ch8,ch8_info));
