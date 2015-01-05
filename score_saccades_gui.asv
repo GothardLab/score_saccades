@@ -178,14 +178,14 @@ else
     warndlg('Please select item and .SMR files!','Run file error!');
 end
 
-% --- Runs a data file and item file 
+% --- Runs a data file based off which epoch parameters are set
 function outData = runFile_main(inData)
 
 epoch = inData.epochParams;
 
 switch epoch
     case 'All'
-        outData = runFile_all(inData)
+        outData = runFile_all(inData);
     case 'Images'
         
     case 'Movies'
@@ -197,7 +197,23 @@ end
 % --- Loads all data
 function outData = runFile_all(inData)
 
-if inData. 
+outData = inData;
+
+[trial_path] = func_decode_pres_images_encode(outData.itemParams.fname,outData.itemParams.dir, outData.smrParams.fname,outData.smrParams.dir, outData.timeParams.start, outData.timeParams.stop);
+
+fprintf('Calibrated data saved 
+[trlDir, trlName, trlExt] = fileparts(trial_path);
+
+outData.fileParms.trial_path = trial_path;
+outData.fileParms.trlDir = [trlDir, '\'];
+outData.fileParms.trlFname = [trlName, trlExt];
+
+[cal_path] = func_calibrate_image_eyedata_PRESENTATION(outData.fileParms.trlFname, outData.fileParms.trlDir, outData.smrParams.fname,outData.smrParams.dir);
+[calDir, calName, calExt] = fileparts(cal_path);
+
+outData.fileParms.cal_path = cal_path;
+outData.fileParms.calDir = [calDir, '\'];
+outData.fileParms.calFname = [calName, calExt];
 
 function startTime_edit_Callback(hObject, eventdata, handles)
 % hObject    handle to startTime_edit (see GCBO)

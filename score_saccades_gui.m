@@ -178,26 +178,51 @@ else
     warndlg('Please select item and .SMR files!','Run file error!');
 end
 
-% --- Runs a data file and item file 
+% --- Runs a data file based off which epoch parameters are set
 function outData = runFile_main(inData)
 
 epoch = inData.epochParams;
 
 switch epoch
     case 'All'
-        outData = runFile_all(inData)
+        outData = runFile_all(inData);
     case 'Images'
+        outData = runFile_images(inData);
         
     case 'Movies'
         
     otherwise
         warndlg('Please select an epoch!','Epoch selection error!');
+        outData = inData;
 end
 
-% --- Loads all data
-function outData = runFile_all(inData)
+outData.saveDir = pwd;
+outData.saveName = [outData.smrParams.fname(end-4:end), 'saccadescoring.mat'];
+outData.savePath = fullfile(outData.saveDir, outData.saveName);
+save(outData.savePath);
+set(handles.matFile_text,'String',outData.saveName);
 
-if inData. 
+% --- Loads image trials
+function outData = runFile_images(inData)
+
+outData = inData;
+
+[trial_path] = func_decode_pres_images_encode(outData.itemParams.fname,outData.itemParams.dir, outData.smrParams.fname,outData.smrParams.dir, outData.timeParams.start, outData.timeParams.stop);
+
+fprintf('Trial information saved at: %s\n', trial_path);
+[trlDir, trlName, trlExt] = fileparts(trial_path);
+
+outData.fileParms.trial_path = trial_path;
+outData.fileParms.trlDir = [trlDir, '\'];
+outData.fileParms.trlFname = [trlName, trlExt];
+
+[cal_path] = func_calibrate_image_eyedata_PRESENTATION(outData.fileParms.trlFname, outData.fileParms.trlDir, outData.smrParams.fname,outData.smrParams.dir);
+[calDir, calName, calExt] = fileparts(cal_path);
+fprintf('Calibrated data saved at: %s\n', cal_path);
+
+outData.fileParms.cal_path = cal_path;
+outData.fileParms.calDir = [calDir, '\'];
+outData.fileParms.calFname = [calName, calExt];
 
 function startTime_edit_Callback(hObject, eventdata, handles)
 % hObject    handle to startTime_edit (see GCBO)
