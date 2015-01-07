@@ -15,14 +15,14 @@ fprintf('Saving file at %s: ', save_path);
 %[neweyeFile7,neweyePath7] = uigetfile('*.mat','pick the matlab file that has the scanpath data (.mat) ');
 %load([neweyePath7,neweyeFile7]);
 slidenum=1;
-imonlength=500; 
+imonlength=4000; 
 
 for i=1:length(trialinfo);
     clear start_time;
     start_time =round(trialinfo(i).imgon);
     stop_time =round(trialinfo(i).imgoff); 
-    imagetrial(i).allX=eyeX(start_time:stop_time);
-    imagetrial(i).allY=eyeY(start_time:stop_time);
+    imagetrial(i).allX=eyeX(start_time+imonlength);
+    imagetrial(i).allY=eyeY(start_time+imonlength);
     imagetrial(i).image_on_time = trialinfo(i).imgon;
     imagetrial(i).start_time = start_time;
     imagetrial(i).stop_time = stop_time;
