@@ -32,10 +32,13 @@ scnFile = [scnName, scnExt];
 
 %imgPath = 'E:\dat\img\REMOTE32\';
 %func_check_saccade_times(scnFile,scnPath, imgPath)
-func_check_saccade_times_alldata(scnFile,scnPath, sTimeITM, eTimeITM);
+func_new_check_saccade_times_images(save_path, cal_path);
+
 
 elseif strcmp(button, reopenStr)
-    
+    [sacFile,sacDir] = uigetfile('*SCORING_SACCADES.mat','pick the mat file from your last saccade scoring session'); %have the user pick the appropriate movie itm file
+    sacPath = fullfile(sacDir, sacFile);
+    func_old_check_saccade_times_images(sacPath);
 else
     
     helpdlg('How did this get here I am not good with computer','YOU CHOOSE WRONG!')
