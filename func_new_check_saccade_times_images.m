@@ -1,8 +1,8 @@
- %function func_new_check_saccade_times_images(trial_path, eye_path)
-clear all
-clc
-trial_path = 'C:\Users\bamboo\Desktop\circ8test2\matfiles\121813_gin_circ8_trec_trialinfo_100-1000_circ8B_itm.mat';
-eye_path = 'C:\Users\bamboo\Desktop\circ8test2\matfiles\121813_gin_circ8_trec_calibrated_eye.mat';
+function func_new_check_saccade_times_images(trial_path, eye_path)
+%clear all
+%clc
+%trial_path = 'C:\Users\bamboo\Desktop\circ8test2\matfiles\121813_gin_circ8_trec_trialinfo_100-1000_circ8B_itm.mat';
+%eye_path = 'C:\Users\bamboo\Desktop\circ8test2\matfiles\121813_gin_circ8_trec_calibrated_eye.mat';
 
 load handel;
 player = audioplayer(y, Fs);
