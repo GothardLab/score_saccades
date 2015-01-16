@@ -178,6 +178,25 @@ else
     warndlg('Please select item and .SMR files!','Run file error!');
 end
 
+function [x, y] = loadEyes(smrPath)
+    
+    spikeFile = load_smr(smrPath);
+    
+    for chanDex = 1:size(spikeFile,2)
+        if strcmp(spikeFile(chanDex).title, 'eyex') || strcmp(spikeFile(chanDex).title, 'x') 
+            x = spikeFile(chanDex);
+        elseif strcmp(spikeFile(chanDex).title, 'eyey') || strcmp(spikeFile(chanDex).title, 'y') 
+            y = spikeFile(chanDex);
+        end
+    end
+    
+    if ~exist('x', 'var')
+        error('X eye channel not found');
+    elseif ~exist('y', 'var')
+        error('Y eye channel not found');
+    end
+
+
 % --- Runs a data file based off which epoch parameters are set
 function outData = runFile_main(inData)
 
@@ -201,6 +220,14 @@ outData.saveName = [outData.smrParams.fname(end-4:end), 'saccadescoring.mat'];
 outData.savePath = fullfile(outData.saveDir, outData.saveName);
 save(outData.savePath);
 set(handles.matFile_text,'String',outData.saveName);
+
+function outData = runFile_movies(inData)
+
+outData = inData;
+
+outData.trials =  find_trials_showmoviephysio(smrParams.path, itemParams.path);
+
+[outData.all_x, outData.all_y] = loadEyes(smrPath);
 
 % --- Loads image trials
 function outData = runFile_images(inData)
