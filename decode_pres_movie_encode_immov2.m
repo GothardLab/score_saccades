@@ -1,11 +1,20 @@
 %this function decodes the encodes that presentation sends during
 %presentation of movies
 
-function [movietrial]=decode_pres_movie_encode_immov2(smrfile, itmfile, moviesStart, moviesEnd);
+%function [movietrial]=decode_pres_movie_encode_immov2(smrfile, itmfile, moviesStart, moviesEnd);
 %the output is a structure that contains the trial information for each
 %movie presentation.  The first 2 inputs are the spike smr file and the movie itm
 %file.  The last 2 inputs are the start and end times of the movie section
 %of the file
+
+keep eyeFile eyePath itmFile itmPath moviesEndS moviesStartS
+clc
+
+smrfile = fullfile(eyePath, eyeFile);
+itmfile = fullfile(itmPath, itmFile);
+moviesStart = moviesStart;
+moviesEnd = moviesEnd ;
+
 
 fid=fopen(smrfile);    %open the file with chan 32
 [Allheader]=SONFileHeader(fid); %get the headers of the channels in this spike file
@@ -75,8 +84,8 @@ hiblob(find(hiblob==59395))=[];
 marktimes(find(hiblob==3587))=[];
 hiblob(find(hiblob==3587))=[];
 
-cueon=find(hiblob(1:end-5)==35 & hiblob(2:end-4)==1000 & hiblob(3:end-3)==1000 & hiblob(4:end-2)==14 & hiblob(5:end-1)==36 & hiblob(6:end)>255);
-cueon=unique([cueon,find(hiblob(1:end-4)==35 & hiblob(2:end-3)==1000 & hiblob(3:end-2)==14 & hiblob(4:end-1)==36 & hiblob(5:end)>255)]);
+cueon=find(hiblob(1:end-1)==35 & hiblob(2:end)~=36);%find(hiblob(1:end-5)==35 & hiblob(2:end-4)==1000 & hiblob(3:end-3)==1000 & hiblob(4:end-2)==14 & hiblob(5:end-1)==36 & hiblob(6:end)>255);
+%cueon=unique([cueon,find(hiblob(1:end-4)==35 & hiblob(2:end-3)==1000 & hiblob(3:end-2)==14 & hiblob(4:end-1)==36 & hiblob(5:end)>255)]);
 
 for i=1:length(cueon);  %scroll through all the cue on times
 

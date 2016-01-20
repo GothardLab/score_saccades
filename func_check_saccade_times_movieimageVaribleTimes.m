@@ -1,9 +1,9 @@
-function func_check_saccade_times_movieimage()%(neweyeFile7,neweyePath7)
+function func_check_saccade_times_movieimageVaribleTimes()%(neweyeFile7,neweyePath7)
 
 [neweyeFile7,neweyePath7] = uigetfile('*.mat','pick the matlab file that has the scanpath data (.mat) ');
 load([neweyePath7,neweyeFile7]);
 slidenum=1;
-imonlength=20000;
+imonlength=10000;
 
 for i=1:length(movietrial);
     clear distime;
